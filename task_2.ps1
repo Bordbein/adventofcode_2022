@@ -34,18 +34,16 @@ $totalScore = 0
 foreach($line in ($taskInput -split "`r`n")) {
     $oppMove = $moveList | where {$_.opp -eq $line.Split(' ')[0]}
     $meMove = $moveList | where {$_.me -eq $line.Split(' ')[1]}
+
+    $totalScore += $meMove.score
     
     if($meMove.me -eq $oppMove.me) {
         $totalScore += $scoreDraw
-        $totalScore += $meMove.score
     } else {
-    
         if($meMove.win -eq $oppMove.opp) {
             $totalScore += $scoreWin
-            $totalScore += $meMove.score
         } else {
             $totalScore += $scoreLost
-            $totalScore += $meMove.score
         }
     }
 }
