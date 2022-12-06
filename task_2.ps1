@@ -1,8 +1,6 @@
 $folderRoot = Split-Path $MyInvocation.MyCommand.Source
 $taskInput = Get-Content -Path (Join-Path $folderRoot "inputs\input_2.txt")
 
-
-
 $scoreLost = 0
 $scoreDraw = 3
 $scoreWin = 6
