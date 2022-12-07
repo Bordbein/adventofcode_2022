@@ -9,9 +9,8 @@ $chars += ([char]'A'..[char]'Z')
 
 foreach($line in ($taskInput -split "`r`n")) {
     $lineMid = $line.Length / 2
-    $lineRest = $line.Length - $lineMid
     $firstComp = $line.Substring(0, $lineMid)
-    $secComp = $line.Substring(($lineMid), $lineRest)
+    $secComp = $line.Substring($lineMid, $lineMid)
 
     $matchingLetters = @()
 
@@ -29,3 +28,9 @@ foreach($line in ($taskInput -split "`r`n")) {
 }
 
 Write-Host ('Task 3, part 1: {0}' -f $prio)
+
+
+
+foreach($line in ($taskInput -split "`r`n")) {
+    
+}
