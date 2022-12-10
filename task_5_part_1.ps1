@@ -73,4 +73,4 @@ foreach($stack in $caseArray) {
     $topCases += $stack.Substring(0,1)
 }
 
-Write-Host ('Task 4, Part 1: {0}' -f $topCases)
+Write-Host ('Task 5, Part 1: {0}' -f $topCases)

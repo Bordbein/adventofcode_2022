@@ -24,4 +24,4 @@ $numberofOverlapping = 0
     }
 }
 
-Write-Host ('Task 4, part 2: {0}' -f $numberofOverlapping)
+Write-Host ('Task 4, Part 2: {0}' -f $numberofOverlapping)
