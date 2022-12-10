@@ -1,3 +1,7 @@
+#------------------------------Notes------------------------------------#
+# Task 1, Part 1
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
 $folderRoot = Split-Path $MyInvocation.MyCommand.Source
 $taskInput = Get-Content -Path (Join-Path $folderRoot "inputs\input_1.txt")
 
@@ -15,10 +19,6 @@ foreach($line in ($taskInput -split "`r`n")) {
     }
 }
 
-$partOne = $lists | sort -Descending | select -First 1
+$partOne = $lists | Sort-Object -Descending | Select-Object -First 1
 
-Write-Host ('Task 1, part 1: {0}' -f $partOne)
-
-$partTwo = $lists | sort -Descending | select -First 3 | Measure-Object -Sum | select -ExpandProperty Sum
-
-Write-Host ('Task 1, part 2: {0}' -f $partTwo)
+Write-Host ('Task 1, Part 1: {0}' -f $partOne)

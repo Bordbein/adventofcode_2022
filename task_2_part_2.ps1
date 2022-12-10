@@ -1,3 +1,7 @@
+#------------------------------Notes------------------------------------#
+# Task 2, Part 2
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
 $folderRoot = Split-Path $MyInvocation.MyCommand.Source
 $taskInput = Get-Content -Path (Join-Path $folderRoot "inputs\input_2.txt")
 
@@ -32,28 +36,13 @@ $moveList = @(
     }
 )
 
-$perfectStrat = 0
 $alternateStrat = 0
 
 foreach($line in ($taskInput -split "`r`n")) {
 
-    # Part One
     $oppMove = $moveList | where {$_.opp -eq $line.Split(' ')[0]}
     $meMove = $moveList | where {$_.me -eq $line.Split(' ')[1]}
 
-    $perfectStrat += $meMove.score
-    
-    if($meMove.me -eq $oppMove.me) {
-        $perfectStrat += $scoreDraw
-    } else {
-        if($meMove.win -eq $oppMove.opp) {
-            $perfectStrat += $scoreWin
-        } else {
-            $perfectStrat += $scoreLost
-        }
-    }
-
-    # Part Two
     if($meMove.alt -eq 'lose') {
         $altMove = $moveList | where {$_.opp -eq $oppMove.win}
         $alternateStrat += $scoreLost
@@ -72,6 +61,4 @@ foreach($line in ($taskInput -split "`r`n")) {
     $alternateStrat += $altMove.score
 }
 
-Write-Host ('Task 2, part 1: {0}' -f $perfectStrat)
-
-Write-Host ('Task 2, part 2: {0}' -f $alternateStrat)
+Write-Host ('Task 2, Part 2: {0}' -f $alternateStrat)
