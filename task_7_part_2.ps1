@@ -42,7 +42,7 @@ foreach($line in $taskInput) {
     if($line -match '^\$ cd \.\.$') { 
         #------------------------------Notes------------------------------------#
         # Removing the last entries in the parent array when we go up
-        # in the directory
+        # in the structure
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
         $currentLevel--
