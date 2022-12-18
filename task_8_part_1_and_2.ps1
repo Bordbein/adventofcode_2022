@@ -1,5 +1,5 @@
 #------------------------------Notes------------------------------------#
-# Task 8, Part 1
+# Task 8, Part 1 and 2
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 $folderRoot = Split-Path $MyInvocation.MyCommand.Source
@@ -13,6 +13,7 @@ $verticalArray = New-Object string[] $inputWidth
 
 $lineNr = 0
 $howManyVisible = 0
+$highestScenicScore = 0
 
 foreach($line in $taskInput) {
     #------------------------------Notes------------------------------------#
@@ -58,30 +59,68 @@ for($rowNr=0;$rowNr -lt $inputLength;$rowNr++) {
             continue colLoop
         }
 
+        $arrWest = $horizontalArray[$rowNr][0..($colNr - 1)]
+        $arrEast = $horizontalArray[$rowNr][($colNr + 1)..$inputWidth]
+        $arrNorth = $verticalArray[$colNr][0..($rowNr - 1)]
+        $arrSouth = $verticalArray[$colNr][($rowNr + 1)..$inputLength]
+
+        [System.Array]::Reverse($arrWest)
+        [System.Array]::Reverse($arrNorth)
+
         $checkArrays = @(
             #------------------------------Notes------------------------------------#
             # Ranges of numbers to the left or right of our current position
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-            ,$horizontalArray[$rowNr][0..($colNr - 1)]                #west
-            ,$horizontalArray[$rowNr][($colNr + 1)..($inputWidth -1)] #east
-            ,$verticalArray[$colNr][0..($rowNr - 1)]                  #north
-            ,$verticalArray[$colNr][($rowNr + 1)..($inputWidth -1)]   #south
+            ,$arrWest
+            ,$arrEast
+            ,$arrNorth
+            ,$arrSouth
         )
+
+        $visibilityArray = @()
+        $multiplyList = @()
 
         foreach($checkArray in $checkArrays) {
             #------------------------------Notes------------------------------------#
             # Check the current number against the ranges.
             #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-            $hiddenFromDirection = $checkArray | where {$_ -ge $horizontalArray[$rowNr][$colNr]}
+            $treeVisible = $true
+            $multiplyBy = 0
 
-            if(-not $hiddenFromDirection) {
+            foreach($nr in $checkArray) {
+                $multiplyBy++
+
+                if($nr -ge $horizontalArray[$rowNr][$colNr]) {
+                    $treeVisible = $false
+                    break
+                }
+            }
+
+            $visibilityArray += $treeVisible
+            $multiplyList += $multiplyBy
+        }
+        
+        $scenicScore = 1
+
+        foreach($nr in $multiplyList) {
+            $scenicScore *= $nr
+        }
+
+        if($scenicScore -gt $highestScenicScore) {
+            $highestScenicScore = $scenicScore
+        }
+
+        foreach($visibility in $visibilityArray) {
+            if($visibility) {
                 $howManyVisible++
                 continue colLoop
             }
         }
+        
     }
 }
 
 Write-Host ('Task 8, Part 1: {0}' -f $howManyVisible)
+Write-Host ('Task 8, Part 2: {0}' -f $highestScenicScore)
